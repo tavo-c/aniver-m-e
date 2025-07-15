@@ -33,6 +33,11 @@
       margin-bottom: 30px;
     }
 
+    #btn-wrapper {
+      position: relative;
+      height: 100px;
+    }
+
     .btn {
       padding: 12px 30px;
       font-size: 1.2rem;
@@ -42,7 +47,6 @@
       cursor: pointer;
       color: white;
       transition: 0.3s ease;
-      position: relative;
     }
 
     #yesBtn {
@@ -52,6 +56,9 @@
     #noBtn {
       background-color: #dc3545;
       position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
     }
 
     #message {
@@ -79,14 +86,20 @@
       #container {
         padding: 20px;
       }
+
+      #btn-wrapper {
+        height: 150px;
+      }
     }
   </style>
 </head>
 <body>
   <div id="container">
     <h1>Você me ama?</h1>
-    <button id="yesBtn" class="btn">Sim</button>
-    <button id="noBtn" class="btn">Não</button>
+    <div id="btn-wrapper">
+      <button id="yesBtn" class="btn">Sim</button>
+      <button id="noBtn" class="btn">Não</button>
+    </div>
     <div id="message">
       <p>Amamos muito a senhora também, eu e a Cintia não queremos nem imaginar como seria nossa vida sem você, obrigado por tudo o que tem feito pela gente. Hoje é o dia em que comemoramos seu aniversário e também o dia que Deus escolheu para nossa mãe nascer.<br><br>Nós te amamos, feliz aniversário!!</p>
     </div>
@@ -96,27 +109,29 @@
     const noBtn = document.getElementById('noBtn');
     const yesBtn = document.getElementById('yesBtn');
     const message = document.getElementById('message');
+    const wrapper = document.getElementById('btn-wrapper');
 
-    // movimentar botão "não"
-    document.addEventListener('mousemove', function(e) {
-      const x = e.clientX;
-      const y = e.clientY;
-      const rect = noBtn.getBoundingClientRect();
+    wrapper.addEventListener('mousemove', function(e) {
+      const rect = wrapper.getBoundingClientRect();
+      const mouseX = e.clientX - rect.left;
+      const mouseY = e.clientY - rect.top;
+      const btnRect = noBtn.getBoundingClientRect();
+      const btnX = btnRect.left - rect.left;
+      const btnY = btnRect.top - rect.top;
 
       if (
-        x >= rect.left - 20 &&
-        x <= rect.right + 20 &&
-        y >= rect.top - 20 &&
-        y <= rect.bottom + 20
+        mouseX >= btnX - 50 &&
+        mouseX <= btnX + noBtn.offsetWidth + 50 &&
+        mouseY >= btnY - 50 &&
+        mouseY <= btnY + noBtn.offsetHeight + 50
       ) {
-        const offsetX = (Math.random() - 0.5) * 300;
-        const offsetY = (Math.random() - 0.5) * 300;
-        noBtn.style.top = `${Math.max(10, rect.top + offsetY)}px`;
-        noBtn.style.left = `${Math.max(10, rect.left + offsetX)}px`;
+        const newX = Math.random() * (wrapper.offsetWidth - noBtn.offsetWidth);
+        const newY = Math.random() * (wrapper.offsetHeight - noBtn.offsetHeight);
+        noBtn.style.left = `${newX}px`;
+        noBtn.style.top = `${newY}px`;
       }
     });
 
-    // ao clicar em "sim"
     yesBtn.addEventListener('click', () => {
       message.style.display = 'block';
       yesBtn.style.display = 'none';
