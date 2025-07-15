@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Feliz Aniversário, Mãe!</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: 'Segoe UI', sans-serif;
+      background: url('bg.jpg') no-repeat center center fixed;
+      background-size: cover;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #container {
+      width: 90%;
+      max-width: 600px;
+      background-color: rgba(255, 255, 255, 0.7);
+      padding: 40px;
+      border-radius: 20px;
+      text-align: center;
+      box-shadow: 0 0 20px rgba(0,0,0,0.2);
+      transition: all 0.5s ease;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 30px;
+    }
+
+    .btn {
+      padding: 12px 30px;
+      font-size: 1.2rem;
+      border: none;
+      border-radius: 8px;
+      margin: 10px;
+      cursor: pointer;
+      color: white;
+      transition: 0.3s ease;
+      position: relative;
+    }
+
+    #yesBtn {
+      background-color: #28a745;
+    }
+
+    #noBtn {
+      background-color: #dc3545;
+      position: absolute;
+    }
+
+    #message {
+      display: none;
+      font-size: 1.2rem;
+      margin-top: 30px;
+      animation: fadeIn 1s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 1.8rem;
+      }
+
+      .btn {
+        font-size: 1rem;
+        padding: 10px 20px;
+      }
+
+      #container {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="container">
+    <h1>Você me ama?</h1>
+    <button id="yesBtn" class="btn">Sim</button>
+    <button id="noBtn" class="btn">Não</button>
+    <div id="message">
+      <p>Amamos muito a senhora também, eu e a Cintia não queremos nem imaginar como seria nossa vida sem você, obrigado por tudo o que tem feito pela gente. Hoje é o dia em que comemoramos seu aniversário e também o dia que Deus escolheu para nossa mãe nascer.<br><br>Nós te amamos, feliz aniversário!!</p>
+    </div>
+  </div>
+
+  <script>
+    const noBtn = document.getElementById('noBtn');
+    const yesBtn = document.getElementById('yesBtn');
+    const message = document.getElementById('message');
+
+    // movimentar botão "não"
+    document.addEventListener('mousemove', function(e) {
+      const x = e.clientX;
+      const y = e.clientY;
+      const rect = noBtn.getBoundingClientRect();
+
+      if (
+        x >= rect.left - 20 &&
+        x <= rect.right + 20 &&
+        y >= rect.top - 20 &&
+        y <= rect.bottom + 20
+      ) {
+        const offsetX = (Math.random() - 0.5) * 300;
+        const offsetY = (Math.random() - 0.5) * 300;
+        noBtn.style.top = `${Math.max(10, rect.top + offsetY)}px`;
+        noBtn.style.left = `${Math.max(10, rect.left + offsetX)}px`;
+      }
+    });
+
+    // ao clicar em "sim"
+    yesBtn.addEventListener('click', () => {
+      message.style.display = 'block';
+      yesBtn.style.display = 'none';
+      noBtn.style.display = 'none';
+    });
+  </script>
+</body>
+</html>
